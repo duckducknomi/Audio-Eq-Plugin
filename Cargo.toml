@@ -1,5 +1,5 @@
 [package]
-name = "{{ cookiecutter.project_name }}"
+name = "audio-eq-plugin"
 version = "0.1.0"
 edition = "2021"
 authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email_address }}>"]

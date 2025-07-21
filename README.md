@@ -1,11 +1,35 @@
-# NIH-plug template
+# Audio EQ Plugin
 
-This template can be used with
-[cookiecutter](https://github.com/cookiecutter/cookiecutter) to create a new
-[NIH-plug](https://github.com/robbert-vdh/nih-plug) project:
+A simple audio gain plugin built in Rust using [`nih-plug`](https://github.com/robbert-vdh/nih-plug).  
+This plugin applies smooth, logarithmically-scaled gain to stereo audio input.
 
-```bash
-cookiecutter gh:robbert-vdh/nih-plug-template
-```
+Supports:
+- **CLAP**
+- **VST3**
 
-Check out the generated project's readme for building instructions.
+---
+
+## ✨ Features
+
+- Stereo audio support
+- Smooth gain control (with logarithmic smoothing)
+- Compatible with modern plugin hosts like REAPER
+
+---
+
+## 🛠️ Building and Bundling
+
+### Prerequisites
+
+- [Rust](https://www.rust-lang.org/tools/install)
+- [`cargo-generate`](https://github.com/cargo-generate/cargo-generate)
+- A supported DAW (e.g. **REAPER**) for testing
+- macOS (for `.vst3` and `.clap` bundles)
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your-username/audio-eq-plugin.git
+   cd audio-eq-plugin

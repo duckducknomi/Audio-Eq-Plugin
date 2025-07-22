@@ -41,7 +41,7 @@ impl Default for AudioEqPluginParams {
 
 impl Plugin for AudioEqPlugin {
     const NAME: &'static str = "Audio EQ Plugin";
-    const VENDOR: &'static str = "Your Name Here";
+    const VENDOR: &'static str = "DUCKDUCKNOMI";
     const URL: &'static str = env!("CARGO_PKG_HOMEPAGE");
     const EMAIL: &'static str = "your@email.com";
 

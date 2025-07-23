@@ -7,8 +7,14 @@ struct AudioEqPlugin {
 
 #[derive(Params)]
 struct AudioEqPluginParams {
+    #[id = "frequency"]
+    pub frequency: FloatParam,
+
     #[id = "gain"]
     pub gain: FloatParam,
+
+    #[id = "q"]
+    pub q: FloatParam,
 }
 
 impl Default for AudioEqPlugin {
@@ -21,27 +27,48 @@ impl Default for AudioEqPlugin {
 
 impl Default for AudioEqPluginParams {
     fn default() -> Self {
+        fn parse_f32(input: &str) -> Option<f32> {
+            input.parse().ok()
+        }
+
         Self {
+            frequency: FloatParam::new(
+                "Frequency",
+                1000.0,
+                FloatRange::Linear { min: 20.0, max: 20000.0 },
+            )
+            .with_unit(" Hz")
+            .with_value_to_string(formatters::v2s_f32_rounded(2))
+            .with_string_to_value(Arc::new(parse_f32)),
+
             gain: FloatParam::new(
                 "Gain",
-                util::db_to_gain(0.0),
+                0.0,
+                FloatRange::Linear { min: -24.0, max: 24.0 },
+            )
+            .with_unit(" dB")
+            .with_step_size(0.1)
+            .with_value_to_string(formatters::v2s_f32_rounded(1))
+            .with_string_to_value(Arc::new(parse_f32)),
+
+            q: FloatParam::new(
+                "Q",
+                1.0,
                 FloatRange::Skewed {
-                    min: util::db_to_gain(-30.0),
-                    max: util::db_to_gain(30.0),
-                    factor: FloatRange::gain_skew_factor(-30.0, 30.0),
+                    min: 0.1,
+                    max: 10.0,
+                    factor: 0.5,
                 },
             )
-            .with_smoother(SmoothingStyle::Logarithmic(50.0))
-            .with_unit(" dB")
-            .with_value_to_string(formatters::v2s_f32_gain_to_db(2))
-            .with_string_to_value(formatters::s2v_f32_gain_to_db()),
+            .with_value_to_string(formatters::v2s_f32_rounded(2))
+            .with_string_to_value(Arc::new(parse_f32)),
         }
     }
 }
 
 impl Plugin for AudioEqPlugin {
     const NAME: &'static str = "Audio EQ Plugin";
-    const VENDOR: &'static str = "DUCKDUCKNOMI";
+    const VENDOR: &'static str = "BESTEQEVER123";
     const URL: &'static str = env!("CARGO_PKG_HOMEPAGE");
     const EMAIL: &'static str = "your@email.com";
 
